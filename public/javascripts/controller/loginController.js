@@ -3,7 +3,7 @@
 
 appModule.controller('loginController', ['$scope', '$http', function ($scope, $http) {
 
-    var connectionWelcomeText = "Angular connected";
+    var connectionWelcomeText = "If you can see this message then Angular framework is connected";
 
     var errorrTextDefault = "Error "
 
@@ -17,13 +17,12 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
 
 
     $scope.init = function () {
-
         $scope.statusText = connectionWelcomeText;
-        resetAddReviewFrom();
-        $scope.statusText = "";
-        $scope.isLoading = false;
-        $scope.loadJson();
-        $scope.reviewWebsites = {};
+        // resetAddReviewFrom();
+        // $scope.statusText = "";
+        // $scope.isLoading = false;
+        // $scope.loadJson();
+        // $scope.reviewWebsites = {};
 
     };
 
@@ -84,7 +83,8 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
                     $scope.statusText = errorrTextDefault + " " + status + " " + data;
                     $scope.isLoading = false;
                 });
-    };
+
+    };
 
     $scope.init();
 

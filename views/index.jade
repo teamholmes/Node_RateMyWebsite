@@ -1,12 +1,16 @@
 extends layout
 
-block scripts
+block append scripts
 	script(src='/javascripts/controller/loginController.js')
 
 block content
-	<h3>Proof of concept app written in Node.js, Express, Jade MongoDB</h3>
-	
+	<div ng-app="reviewmywebsite" ng-controller="loginController">
+	<h3>Proof of concept app written in Node.js, Express, Jade & MongoDB</h3>
+	<p>{{statusText}}</p>
 	<p>tomatoe<p>
+
+	
+	</div>
 
 
 
