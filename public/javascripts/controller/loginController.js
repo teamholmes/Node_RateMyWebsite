@@ -18,6 +18,7 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
 
     $scope.init = function () {
         $scope.statusText = connectionWelcomeText;
+        $scope.currentDateTime = new Date();
         // resetAddReviewFrom();
         // $scope.statusText = "";
         // $scope.isLoading = false;
@@ -34,7 +35,7 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
     $scope.addReview = function (form) {
         newReview = $scope.form;
 
-        $scope.statusText = "Please wait while the data is saved..."
+        $scope.statusText = "Please wait while the data is saved...";
         $scope.isLoading = true;
         $http({
             method: 'POST',
