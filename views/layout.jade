@@ -1,7 +1,18 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+doctype html.
+
+block head
+	title= title
+	link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+	link(rel='stylesheet', href='/stylesheets/Site.css')
+	link(rel='stylesheet', href='/stylesheets/Site.css')
+	link(rel='stylesheet', href='/stylesheets/Site.css')
+
+block scripts
+	script(src='/javascripts/angular.js')
+	script(src='/javascripts/app.js')
+
+
+body
+	h1 Get your website reviewed
+	block content
+
