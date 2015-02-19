@@ -1,15 +1,52 @@
 extends layout
 
 block append scripts
-	script(src='/javascripts/controller/loginController.js')
+	script(src='/javascripts/angular/controller/websiteListController.js')
 
 block content
-	<div ng-app="reviewmywebsite" ng-controller="loginController">
+	<div ng-app="reviewmywebsite" ng-controller="websiteListController">
 	<h3>Proof of concept app written in Node.js, Express, Jade & MongoDB</h3>
 	<p>{{statusText}} {{currentDateTime | date:'dd-MM-yyyy @ HH:mm'}}</p>
-	<p>tomatoeaaa<p>
+	<p>Body copy here<p>
 
-	
+
+
+
+	<div class="row clearfix">
+
+
+	<div class="row">
+	<div class="col-md-6">
+	<nav class="navbar navbar-default">
+	<form class="navbar-form navbar-left" role="search" ng-show="reviewWebsites.length > 0">
+	<div class="form-group">
+	<input type="text" class="form-control" placeholder="Filter list" ng-model="filterquery">
+	</div>
+	</form>
+	</nav>
+	</div>
+	</div>
+
+	<div class="row">
+	<div class="col-md-6">
+	<div id="listing" websitelist></div>
+
+	<p>{{statusText}}</p>
+	</div>
+	</div>
+
+
+	<div class="row">
+	<div class="col-md-6">
+	<div id="addanewreview" addreview></div>
+	</div>
+	</div>
+
+
+
+	</div>
+
+		
 	</div>
 
 

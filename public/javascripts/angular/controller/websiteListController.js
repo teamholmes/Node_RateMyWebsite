@@ -1,11 +1,11 @@
-﻿var appModule = angular.module('reviewmywebsite', []);
+﻿
 
 
-appModule.controller('loginController', ['$scope', '$http', function ($scope, $http) {
+appModule.controller('websiteListController', ['$scope', '$http', '$q', 'dataService', function ($scope, $http, q, dataService) {
 
     var connectionWelcomeText = "If you can see this message then Angular framework is connected";
 
-    var errorrTextDefault = "Error "
+    var errorrTextDefault = "Error ";
 
     var newReview = {};
 
@@ -17,13 +17,13 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
 
 
     $scope.init = function () {
-        $scope.statusText = connectionWelcomeText;
+
+        $scope.statusText =  connectionWelcomeText;
         $scope.currentDateTime = new Date();
-        // resetAddReviewFrom();
-        // $scope.statusText = "";
-        // $scope.isLoading = false;
-        // $scope.loadJson();
-        // $scope.reviewWebsites = {};
+        resetAddReviewFrom();
+        $scope.isLoading = false;
+        $scope.loadJson();
+        $scope.reviewWebsites = {};
 
     };
 
@@ -37,6 +37,8 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
 
         $scope.statusText = "Please wait while the data is saved...";
         $scope.isLoading = true;
+
+
         $http({
             method: 'POST',
             url: '/api/Public',
@@ -69,7 +71,12 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
         $scope.statusText = "Please wait while the data loads..."
         $scope.isLoading = true;
         $scope.reviewWebsites = {};
-        $http.get('/api/public/', {
+
+        //var deferred = $q.defer();
+        $scope.reviewWebsites = dataService.getAllWebsites();
+        console.log("----->" + $scope.reviewWebsites);
+
+        /*$http.get('/api/public/', {
             params: {}
 
         })
@@ -83,7 +90,7 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
                 .error(function (data, status, headers, config) {
                     $scope.statusText = errorrTextDefault + " " + status + " " + data;
                     $scope.isLoading = false;
-                });
+                });*/
 
     };
 
@@ -93,12 +100,12 @@ appModule.controller('loginController', ['$scope', '$http', function ($scope, $h
 
 appModule.directive('websitelist', function () {
     return {
-        templateUrl: '/Scripts/angular/View/websitelist.html'
+        templateUrl: '/javascripts/angular/View/websitelist.html'
     };
 });
 
 appModule.directive('addreview', function () {
     return {
-        templateUrl: '/Scripts/angular/View/AddReview.html'
+        templateUrl: '/javascripts/angular/View/AddReview.html'
     };
 });
