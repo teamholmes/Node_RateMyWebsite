@@ -32,33 +32,29 @@ appModule.controller('websiteListController', ['$scope', '$http', '$q', 'dataSer
         $scope.statusText = item.Name;
     };
 
-    $scope.addReview = function (form) {
+        $scope.addReview = function (form) {
         newReview = $scope.form;
+  
 
         $scope.statusText = "Please wait while the data is saved...";
-        $scope.isLoading = true;
+            $scope.isLoading = true;
+            
+         var serviceresponse = dataService.addWebsite($http, $scope, newReview);
 
-
-        $http({
+        /*$http({
             method: 'POST',
-            url: '/api/Public',
+            url: '/api/Review/',
             data: newReview
         })
                 .success(function (data, status, headers, config) {
-
-                    if (data.Success == true)
-                    {
-                        $scope.reviewWebsites.push(data.ResultData);
-                    }
-
-                    $scope.isLoading = false;
-                    $scope.statusText = data.Message;
-                    resetAddReviewFrom();
+                    console.log("successdata");
+                   
                 })
                 .error(function (data, status, headers, config) {
+                    console.log("fail data");
                     $scope.statusText = errorrTextDefault + " " + status + " " + data;
                     $scope.isLoading = false;
-                });
+                });*/
 
 
 
@@ -71,27 +67,15 @@ appModule.controller('websiteListController', ['$scope', '$http', '$q', 'dataSer
         $scope.statusText = "Please wait while the data loads..."
         $scope.isLoading = true;
         $scope.reviewWebsites = {};
+        
 
-        //var deferred = $q.defer();
-        $scope.reviewWebsites = dataService.getAllWebsites();
-        console.log("----->" + $scope.reviewWebsites);
+         $scope.isLoading = false;
 
-        /*$http.get('/api/public/', {
-            params: {}
+         var serviceresponse = dataService.getAllWebsites($http, $scope);
 
-        })
-                .success(function (data, status, headers, config) {
-                    if (data.Success == true) {
-                        $scope.reviewWebsites = data.ResultData;
-                    }
-                    $scope.isLoading = false;
-                    $scope.statusText = data.Message;
-                })
-                .error(function (data, status, headers, config) {
-                    $scope.statusText = errorrTextDefault + " " + status + " " + data;
-                    $scope.isLoading = false;
-                });*/
+         resetAddReviewFrom();
 
+    
     };
 
     $scope.init();

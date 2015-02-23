@@ -1,0 +1,2 @@
+C:\GitHub\noderatemywebsite\Node_RateMyWebsite\obj\Debug\NodejsApp1.njsprojResolveAssemblyReference.cache
+C:\GitHub\noderatemywebsite\Node_RateMyWebsite\bin\Microsoft.NodejsTools.WebRole.dll
