@@ -44,15 +44,6 @@ appModule.service('dataService',  ['dbRepository',function(dbRepository)
 	};
 
 
-	this.testDBConnection = function()
-	{
-		console.log("accessing testconnection function ");
-		db.on('error', console.error.bind(console, 'connection error:'));
-		db.once('open', function (callback) {
-  			console.log("Database connection succesful");
-		});
-	};
-
 
 	this.addWebsite = function(http, scope, wesitetoadd)
 	{
@@ -67,7 +58,7 @@ appModule.service('dataService',  ['dbRepository',function(dbRepository)
 		{
 		http({
             method: 'POST',
-            url: '/api/Review/',
+            url: '/api/ReviewAdd/',
             data: wesitetoadd
         })
                 .success(function (data, status, headers, config) {

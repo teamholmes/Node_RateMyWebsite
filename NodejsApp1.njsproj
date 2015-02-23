@@ -18,7 +18,8 @@
     <ScriptArguments>
     </ScriptArguments>
     <NodeExePath>C:\Program Files\nodejs\node.exe</NodeExePath>
-    <NodejsPort>5858</NodejsPort>
+    <NodejsPort>3000</NodejsPort>
+    <DebuggerPort>5858</DebuggerPort>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />

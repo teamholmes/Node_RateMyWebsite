@@ -10,10 +10,10 @@ var bodyParser = require('body-parser');
 
 
 
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var reviewSchema = require('./public/javascripts/angular/models/mongooseSchema.js');
 var dPacket = require('./public/javascripts/angular/models/dataPacket.js');
-mongoose.connect('mongodb://localhost:27017/ratemywebsite');
+//mongoose.connect('mongodb://localhost:27017/ratemywebsite');
 
 
 // Start mongodb specific setup
@@ -50,7 +50,7 @@ app.use('/users', users);
 
     // get all Reviews
     app.use('/api/Review', function(req, res) {
-console.log("retrieveing list of websites");
+    console.log("retrieveing list of websites");
         // use mongoose to get all todos in the database
         reviewSchema.find(function(err, reviews) {
 
@@ -73,11 +73,11 @@ console.log("retrieveing list of websites");
     });
 
     // create todo and send back all todos after creation
-    app.post('/api/Review', function(req, res) {
+    app.post('/api/ReviewAdd', function(req, res) {
 
         // create a todo, information comes from AJAX request from Angular
-        console.log(">>>>>>>apr review called");
-        Review.create({
+        console.log(">>>>>>>api ReviewAdd called " + req.body.Name);
+       reviewSchema.create({
             Name : req.body.Name,
             URL : req.body.Url,
             DateAdded : new Date()
