@@ -13,6 +13,8 @@ var bodyParser = require('body-parser');
 //var mongoose = require('mongoose');
 var reviewSchema = require('./public/javascripts/angular/models/mongooseSchema.js');
 var dPacket = require('./public/javascripts/angular/models/dataPacket.js');
+var dbWrapper = require('./public/javascripts/angular/models/dbWrapper.js');
+dbWrapper.DBSetup('tblReviews', 27017, 'localhost', true) ;
 //mongoose.connect('mongodb://localhost:27017/ratemywebsite');
 
 
@@ -43,58 +45,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+console.log("rooting tootin");
 
 
 // routes ======================================================================
 
 
     // get all Reviews
-    app.use('/api/Review', function(req, res) {
-    console.log("retrieveing list of websites");
-        // use mongoose to get all todos in the database
-        reviewSchema.find(function(err, reviews) {
-
-        var dp = new dPacket;
-
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-            if (err)
-            {
-                dp.message = err;
-                res.json(dp);
-            }
-            else
-            {
-                dp.success = true;
-                dp.data = reviewSchema;
-                res.json(dp); 
-            }
-
-        });
-    });
+    app.use('/api/Review', dbWrapper.findAll);
 
     // create todo and send back all todos after creation
-    app.post('/api/ReviewAdd', function(req, res) {
-
-        // create a todo, information comes from AJAX request from Angular
-        console.log(">>>>>>>api ReviewAdd called " + req.body.Name);
-       reviewSchema.create({
-            Name : req.body.Name,
-            URL : req.body.Url,
-            DateAdded : new Date()
-        }, function(err, todo) {
-        if (err)
-            console.log("..... error " + err);
-                res.send(err);
-
-            // get and return all the todos after you create another
-        var dp = new dPacket;;
-        dp.success = true;
-        dp.data = "hello";
-        dp.message = "potatoe";
-        res.json(dp);
-        });
-
-    });
+    app.post('/api/ReviewAdd',  dbWrapper.addData);
 
 
     // delete a todo

@@ -29,18 +29,15 @@ appModule.service('dataService',  ['dbRepository',function(dbRepository)
         })
                 .success(function (data, status, headers, config) {
                     if (data.success == true) {
-                    
 						scope.reviewWebsites = data.data;
-                    	scope.statusText = "wesites loaded";
+                    	scope.statusText = data.data.length + " websites retrieved";
                     }
+                   
                    
                 })
                 .error(function (data, status, headers, config) {
-
-                	scope.statusText = "failed to load websites";
-                    scope.reviewWebsites = {};
+                	scope.statusText = "Failed to load websites";
                 });
-
 	};
 
 
@@ -62,12 +59,12 @@ appModule.service('dataService',  ['dbRepository',function(dbRepository)
             data: wesitetoadd
         })
                 .success(function (data, status, headers, config) {
-                	scope.statusText = "I should be sticking this in MongoDB now";
-                	//scope.reviewWebsite = 
+                	scope.statusText = "Review added";
+                	//scope.reviewWebsites.push(wesitetoadd);
+                	this.getAllWebsites();
                    
                 })
                 .error(function (data, status, headers, config) {
-                    console.log("fail data");
                     scope.statusText = errorrTextDefault + " " + status + " " + data;
                 });
 			

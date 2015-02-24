@@ -35,8 +35,7 @@ appModule.controller('websiteListController', ['$scope', '$http', '$q', 'dataSer
         $scope.addReview = function (form) {
         newReview = $scope.form;
   
-
-        $scope.statusText = "Please wait while the data is saved...";
+     $scope.statusText = "Please wait while the data is saved...";
             $scope.isLoading = true;
             
          var serviceresponse = dataService.addWebsite($http, $scope, newReview);

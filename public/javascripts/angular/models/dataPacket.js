@@ -4,7 +4,9 @@ var packetclass = function() {
 	this.data = "";
 }
 
-
+packetclass.prototype.test = function () {
+  return "Sucess";
+}
 
 module.exports = packetclass;
 

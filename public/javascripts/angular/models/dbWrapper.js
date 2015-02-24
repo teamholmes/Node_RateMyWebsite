@@ -1,5 +1,10 @@
 var mongo = require('mongodb');
 
+
+var dPacket = require('./dataPacket.js');
+
+
+
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
@@ -7,13 +12,16 @@ var Server = mongo.Server,
 var server;
 var db;
 var devMode;
+var tableCollection;
+
 
 exports.DBSetup = function(table, dbPort, dbHost, devMode) {
 
     table = (table == undefined) ? 'datastore' : table;
-    dbPort = (dbPort == undefined) ? 27017 : dbPost;
+    dbPort = (dbPort == undefined) ? 27017 : dbPort;
     dbHost = (dbHost == undefined) ? 'localhost' : dbHost;
     devMode = (devMode == undefined) ? false : devMode;
+    tableCollection = table;
     server = new Server(dbHost, dbPort, {
         auto_reconnect: true
     });
@@ -25,12 +33,12 @@ exports.DBSetup = function(table, dbPort, dbHost, devMode) {
     db.open(function(err, db) {
 
         if (!err) {
-            db.collection('data', {
+            db.collection(tableCollection, {
                 strict: true
             }, function(err, collection) {
                 if (err) {
                     if (devMode) {
-                        console.log("The 'data' collection doesn't exist. Creating it with sample data...");
+                        console.log("The '" + tableCollection + "' collection doesn't exist. Creating it with sample data...");
                         populateDB();
                     }
                 }
@@ -44,7 +52,7 @@ exports.findById = function(req, res) {
 
     var id = req.params.id;
     console.log('Retieving data item: ' + id);
-    db.collection('data', function(err, collection) {
+    db.collection(tableCollection, function(err, collection) {
         collection.findOne({
             '_id': new BSON.ObjectID(id)
         }, function(err, item) {
@@ -54,16 +62,28 @@ exports.findById = function(req, res) {
 };
 
 exports.findAll = function(req, res) {
-    db.collection('data', function(err, collection) {
+    db.collection(tableCollection, function(err, collection) {
         collection.find().toArray(function(err, items) {
-            res.send(items);
+            var dp = new dPacket();
+            dp.success = true;
+            dp.data = items;
+            res.send(dp);
+          
         });
     });
 };
 
 exports.addData = function(req, res) {
-    var itemToAdd = req.body;
-    db.collection('data', function(err, collection) {
+     console.log(">>>>>>>api Rev1111iewAdd called " + req.body.Name);
+     var itemToAdd = 
+     {
+
+        Name : req.body.Name,
+        Url : req.body.Url,
+        DateAdded : new Date()
+     };
+    //var itemToAdd = req.body;
+    db.collection(tableCollection, function(err, collection) {
         collection.insert(itemToAdd, {
             safe: true
         }, function(err, result) {
@@ -86,7 +106,7 @@ exports.updateData = function(req, res) {
     var data = req.body;
     console.log('Updating data: ' + id);
     console.log(JSON.stringify(data));
-    db.collection('data', function(err, collection) {
+    db.collection(tableCollection, function(err, collection) {
         collection.update({
             '_id': new BSON.ObjectID(id)
         }, data, {
@@ -113,7 +133,7 @@ exports.deleteData = function(req, res) {
     if (devMode) {
         console.log('Deleting data: ' + id);
     }
-    db.collection('data', function(err, collection) {
+    db.collection(tableCollection, function(err, collection) {
         collection.remove({
             '_id': new BSON.ObjectID(id)
         }, {
@@ -145,7 +165,7 @@ var populateDB = function() {
         Value: "2"
     }]; 
 
-    db.collection('data', function(err, collection) {
+    db.collection(tableCollection, function(err, collection) {
         collection.insert(items, {
             safe: true
         }, function(err, result) {
